@@ -45,8 +45,8 @@
                     class="visually-hidden"
                     checked
                   />
-                  <b>Тонкое</b>
-                  <span>Из твердых сортов пшеницы</span>
+                  <b>{{ dough.name }}</b>
+                  <span>{{ dough.description }}</span>
                 </label>
               </div>
             </div>
