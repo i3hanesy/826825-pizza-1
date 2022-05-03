@@ -31,3 +31,10 @@ export const sauceValueById = {
   1: "tomato",
   2: "creamy",
 };
+
+export const normalizeiIngredients = (ingredient) => {
+  return {
+    ...ingredient,
+    count: 0,
+  };
+};
