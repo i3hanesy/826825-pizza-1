@@ -22,7 +22,7 @@ export const sizesClassById = {
   3: "big",
 };
 
-export const doughtClassById = {
+export const doughClassById = {
   1: "light",
   2: "large",
 };
@@ -30,4 +30,11 @@ export const doughtClassById = {
 export const sauceValueById = {
   1: "tomato",
   2: "creamy",
+};
+
+export const normalizeiIngredients = (ingredient) => {
+  return {
+    ...ingredient,
+    count: 0,
+  };
 };
