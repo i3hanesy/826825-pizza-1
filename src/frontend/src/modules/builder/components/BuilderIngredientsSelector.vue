@@ -12,7 +12,7 @@
             name="sauce"
             :isChecked="sauce.id === 1"
             :value="`${getNameById(sauceValueById, sauce.id)}`"
-            @radioButtonAction="radioButtonAction($event.value, sauce.price)"
+            @radioButtonAction="radioButtonAction($event.value, sauce.name)"
           >
             <span>{{ sauce.name }}</span>
           </RadioButton>
@@ -28,7 +28,7 @@
             >
               <AppDrag
                 :transfer-data="ingredient"
-                :draggable="ingredient.count !== 3"
+                :draggable="ingredient.count !== MAX_INGRIDIENT_COUNT"
               >
                 <span
                   class="filling"
@@ -58,6 +58,8 @@ import ItemCounter from "@/common/components/ItemCounter";
 import { sauceValueById, fillingClassById } from "@/common/helpers.js";
 import AppDrag from "@/common/components/AppDrag";
 
+import { MAX_INGRIDIENT_COUNT } from "@/common/constants.js";
+
 export default {
   name: "BuilderIngridientsSelector",
   components: { RadioButton, ItemCounter, AppDrag },
@@ -65,6 +67,7 @@ export default {
     return {
       sauceValueById,
       fillingClassById,
+      MAX_INGRIDIENT_COUNT,
     };
   },
   props: {
@@ -85,8 +88,8 @@ export default {
     changeCount(count, ingridient) {
       return this.$emit("changeCount", { count, ingridient });
     },
-    radioButtonAction(value, price) {
-      return this.$emit("radioButtonAction", { value, price });
+    radioButtonAction(value, name) {
+      return this.$emit("radioButtonAction", { value, name });
     },
   },
 };

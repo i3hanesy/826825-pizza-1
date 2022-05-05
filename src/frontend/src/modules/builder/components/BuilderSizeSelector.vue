@@ -12,7 +12,7 @@
           name="diameter"
           :isChecked="size.id === 1"
           :value="`${getNameById(sizesClassById, size.id)}`"
-          @radioButtonAction="radioButtonAction($event.value, size.multiplier)"
+          @radioButtonAction="radioButtonAction($event.value, size.name)"
         >
           <span>{{ size.name }}</span>
         </RadioButton>
@@ -44,8 +44,8 @@ export default {
     getNameById(map, id) {
       return map[id];
     },
-    radioButtonAction(value, multiplier) {
-      return this.$emit("radioButtonAction", { value, multiplier });
+    radioButtonAction(value, name) {
+      return this.$emit("radioButtonAction", { value, name });
     },
   },
 };

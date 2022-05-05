@@ -22,7 +22,7 @@ export const sizesClassById = {
   3: "big",
 };
 
-export const doughtClassById = {
+export const doughClassById = {
   1: "light",
   2: "large",
 };

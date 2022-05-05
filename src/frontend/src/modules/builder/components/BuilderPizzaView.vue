@@ -7,8 +7,7 @@
         name="pizza_name"
         placeholder="Введите название пиццы"
         required
-        :value="pizzaName"
-        @input="setName"
+        v-model="pizzaName"
       />
     </label>
 
@@ -72,9 +71,6 @@ export default {
   },
 
   methods: {
-    setName(event) {
-      this.$emit("setName", (this.pizzaName = event.target.value));
-    },
     getNameById(map, id) {
       return map[id];
     },

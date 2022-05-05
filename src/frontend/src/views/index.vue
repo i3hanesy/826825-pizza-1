@@ -47,9 +47,9 @@ export default {
       misc,
       pizza,
       user,
-      doughPrice: pizza.dough[0].price,
-      soucePrice: pizza.sauces[0].price,
-      sizePrice: pizza.sizes[0].multiplier,
+      doughName: pizza.dough[0].name,
+      souceName: pizza.sauces[0].name,
+      sizeName: pizza.sizes[0].name,
       souceClass: "tomato",
       doughClass: "small",
       ingredients: pizza.ingredients.map((ingredient) =>
@@ -75,11 +75,11 @@ export default {
       this.ingredients[index].count = event.count;
     },
     changeSouce(event) {
-      this.soucePrice = event.price;
+      this.souceName = event.name;
       this.souceClass = event.value;
     },
     changeDough(event) {
-      this.doughPrice = event.price;
+      this.doughName = event.name;
       switch (event.value) {
         case "large":
           this.doughClass = "big";
@@ -90,7 +90,7 @@ export default {
       }
     },
     changeSize(event) {
-      this.sizePrice = event.multiplier;
+      this.sizeName = event.name;
     },
   },
   computed: {
@@ -102,9 +102,16 @@ export default {
       let ingredientsPrice = this.checkedIngredients.reduce((sum, current) => {
         return sum + current.price * current.count;
       }, 0);
-      return (
-        (ingredientsPrice + this.doughPrice + this.soucePrice) * this.sizePrice
-      );
+      let doughPrice = this.pizza.dough.find(
+        (item) => item.name === this.doughName
+      ).price;
+      let soucePrice = this.pizza.sauces.find(
+        (item) => item.name === this.souceName
+      ).price;
+      let sizePrice = this.pizza.sizes.find(
+        (item) => item.name === this.sizeName
+      ).multiplier;
+      return (ingredientsPrice + doughPrice + soucePrice) * sizePrice;
     },
   },
 };

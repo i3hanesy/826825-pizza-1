@@ -8,11 +8,11 @@
           v-for="dough in dough"
           :key="dough.id"
           class="dough__input"
-          :class="`dough__input--${getNameById(doughtClassById, dough.id)}`"
+          :class="`dough__input--${getNameById(doughClassById, dough.id)}`"
           name="dought"
           :isChecked="dough.id === 1"
-          :value="`${getNameById(doughtClassById, dough.id)}`"
-          @radioButtonAction="radioButtonAction($event.value, dough.price)"
+          :value="`${getNameById(doughClassById, dough.id)}`"
+          @radioButtonAction="radioButtonAction($event.value, dough.name)"
         >
           <b>{{ dough.name }}</b>
           <span>{{ dough.description }}</span>
@@ -24,14 +24,14 @@
 
 <script>
 import RadioButton from "@/common/components/RadioButton";
-import { doughtClassById } from "@/common/helpers.js";
+import { doughClassById } from "@/common/helpers.js";
 
 export default {
   name: "BuilderDoughSelector",
   components: { RadioButton },
   data() {
     return {
-      doughtClassById,
+      doughClassById,
     };
   },
   props: {
@@ -45,8 +45,8 @@ export default {
     getNameById(map, id) {
       return map[id];
     },
-    radioButtonAction(value, price) {
-      return this.$emit("radioButtonAction", { value, price });
+    radioButtonAction(value, name) {
+      return this.$emit("radioButtonAction", { value, name });
     },
   },
 };
