@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <AppLayout />
-    <Index />
+    <AppLayout :isLogin="isLogin">
+      <router-view />
+    </AppLayout>
   </div>
 </template>
 
 <script>
-import AppLayout from "@/layouts/AppLayout";
-import Index from "@/views/index";
 export default {
   name: "App",
-  components: {
-    AppLayout,
-    Index,
+  data() {
+    return {
+      isLogin: true,
+    };
   },
 };
 </script>
