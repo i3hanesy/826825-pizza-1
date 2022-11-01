@@ -4,5 +4,10 @@
   "email": "user@example.com",
   "password": "user@example.com",
   "avatar": "/public/img/users/user.jpg",
-  "phone": "+777 777 777"
+  "phone": "+777 777 777",
+  "addresses": [
+    {"id": 1, "name": "Дом", "street": "Любимая", "house": "лучший", "apartment": "счастливый"},
+    {"id": 2, "name": "Работа", "street": "Сложная", "house": "4", "apartment": "7"},
+    {"id": 3, "name": "Друзья", "street": "Беззаботная", "house": "5", "apartment": "6"}
+  ]
 }

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AppLayout :isLogin="isLogin">
+    <AppLayout>
       <router-view />
     </AppLayout>
   </div>
@@ -9,10 +9,8 @@
 <script>
 export default {
   name: "App",
-  data() {
-    return {
-      isLogin: true,
-    };
+  created() {
+    this.$store.dispatch("init");
   },
 };
 </script>

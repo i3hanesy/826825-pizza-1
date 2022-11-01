@@ -11,7 +11,7 @@
       </router-link>
     </div>
     <div class="header__cart">
-      <router-link to="/cart"> 0 ₽ </router-link>
+      <router-link to="/cart"> {{ order.totalPrice }} ₽ </router-link>
     </div>
     <div class="header__user" v-if="isLogin">
       <router-link to="/profile">
@@ -24,14 +24,14 @@
             "
           />
           <img
-            src="img/users/user5.jpg"
+            :src ="user.avatar"
             srcset="img/users/user5@2x.jpg"
-            alt="Василий Ложкин"
+            :alt="user.name"
             width="32"
             height="32"
           />
         </picture>
-        <span>Василий Ложкин</span>
+        <span>{{ user.name }}</span>
       </router-link>
       <router-link to="/" class="header__logout">
         <span>Выйти</span>
@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "AppLayoutHeader",
   props: {
@@ -54,6 +56,16 @@ export default {
       required: true,
     },
   },
+
+  computed: {
+      ...mapState("Auth", {
+          user: "user",
+      }),
+      ...mapState("Cart", {
+          order: "order",
+      }),
+  },
+
 };
 </script>
 

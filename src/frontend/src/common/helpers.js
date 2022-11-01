@@ -16,6 +16,9 @@ export const fillingClassById = {
   15: "blue_cheese",
 };
 
+export const capitalize = string =>
+  `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
+
 export const sizesClassById = {
   1: "small",
   2: "normal",
@@ -27,14 +30,31 @@ export const doughClassById = {
   2: "large",
 };
 
+export const doughShowName = {
+  1: "тонком",
+  2: "толстом",
+};
+
 export const sauceValueById = {
   1: "tomato",
   2: "creamy",
 };
 
-export const normalizeiIngredients = (ingredient) => {
+export const normalizeiJson = (object) => {
   return {
-    ...ingredient,
+    ...object,
     count: 0,
   };
+};
+
+export const findByID = (array, id) => {
+  return array.find((it) => it.id === id);
+};
+
+export const findByName = (array, name) => {
+  return array.find((it) => it.name === name);
+};
+
+export const findIndexByID = (array, id) => {
+  return array.findIndex((it) => it.id === id);
 };
