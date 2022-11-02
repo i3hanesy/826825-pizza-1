@@ -10,9 +10,9 @@
           class="diameter__input"
           :class="`diameter__input--${getNameById(sizesClassById, size.id)}`"
           name="diameter"
-          :isChecked="size.id === 1"
+          :isChecked="size.id === pizza.sizeID"
           :value="`${getNameById(sizesClassById, size.id)}`"
-          @radioButtonAction="radioButtonAction($event.value, size.name)"
+          @radioButtonAction="radioButtonAction($event.value, size)"
         >
           <span>{{ size.name }}</span>
         </RadioButton>
@@ -25,6 +25,9 @@
 import RadioButton from "@/common/components/RadioButton";
 import { sizesClassById } from "@/common/helpers.js";
 
+import { mapGetters, mapState, mapMutations } from "vuex";
+import { CHANGE_SIZE } from "@/store/mutations-types";
+
 export default {
   name: "BuilderSizeSelector",
   components: { RadioButton },
@@ -33,20 +36,29 @@ export default {
       sizesClassById,
     };
   },
-  props: {
-    sizes: {
-      type: Array,
-      required: true,
-    },
+
+  computed: {
+    ...mapState("Builder", {
+        sizes: "sizes",
+        pizza: "pizza",
+    }),
+    ...mapGetters("Builder", {
+        pizzaPrice: "pizzaPrice",
+    }),
   },
 
   methods: {
+    ...mapMutations("Builder", [CHANGE_SIZE]),
+
+    radioButtonAction(value, size) {
+      this[CHANGE_SIZE]({ value, size });
+      this.pizzaPrice
+    },
+
     getNameById(map, id) {
       return map[id];
     },
-    radioButtonAction(value, name) {
-      return this.$emit("radioButtonAction", { value, name });
-    },
+    
   },
 };
 </script>

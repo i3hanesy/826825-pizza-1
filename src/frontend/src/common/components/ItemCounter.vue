@@ -1,10 +1,13 @@
 <template>
-  <div class="counter counter--orange ingredients__counter">
+  <div 
+    class="counter"
+    :class="classCounter"
+  >
     <button
       type="button"
       class="counter__button counter__button--minus"
       @click="$emit('changeCount', count - 1)"
-      :disabled="count === MIN_INGRIDIENT_COUNT"
+      :disabled=" count === minCount"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -12,8 +15,9 @@
     <button
       type="button"
       class="counter__button counter__button--plus"
+      :class="'counter__button--' + buttonClass"
       @click="$emit('changeCount', count + 1)"
-      :disabled="count === MAX_INGRIDIENT_COUNT"
+      :disabled="maxCount ? count === maxCount : false"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -22,24 +26,31 @@
 </template>
 
 <script>
-import {
-  MIN_INGRIDIENT_COUNT,
-  MAX_INGRIDIENT_COUNT,
-} from "@/common/constants.js";
+
 
 export default {
   name: "ItemCounter",
 
-  data() {
-    return {
-      MIN_INGRIDIENT_COUNT,
-      MAX_INGRIDIENT_COUNT,
-    };
-  },
   props: {
     count: {
       type: Number,
       required: true,
+    },
+    classCounter: {
+      type: String,
+      required: true,
+    },
+    buttonClass: {
+      type: String,
+      required: false,
+    },
+    minCount: {
+      type: Number,
+      required: false,
+    },
+    maxCount: {
+      type: Number,
+      required: false,
     },
   },
 };

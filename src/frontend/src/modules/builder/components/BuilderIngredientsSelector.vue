@@ -10,9 +10,9 @@
             :key="sauce.id"
             class="radio ingredients__input"
             name="sauce"
-            :isChecked="sauce.id === 1"
+            :isChecked="sauce.id === pizza.souceID"
             :value="`${getNameById(sauceValueById, sauce.id)}`"
-            @radioButtonAction="radioButtonAction($event.value, sauce.name)"
+            @radioButtonAction="radioButtonAction($event.value, sauce)"
           >
             <span>{{ sauce.name }}</span>
           </RadioButton>
@@ -28,20 +28,20 @@
             >
               <AppDrag
                 :transfer-data="ingredient"
-                :draggable="ingredient.count !== MAX_INGRIDIENT_COUNT"
+                :draggable="getIngredientCount(ingredient.id) !== MAX_INGREDIENT_COUNT"
               >
                 <span
                   class="filling"
-                  :class="`filling--${getNameById(
-                    fillingClassById,
-                    ingredient.id
-                  )}`"
+                  :style="`--my-src: url(${ingredient.image})`"
                 >
                   {{ ingredient.name }}
                 </span>
               </AppDrag>
               <ItemCounter
-                :count="ingredient.count"
+                :classCounter="CLASS_INGREDIENT_COUNTER"
+                :count="getIngredientCount(ingredient.id)"
+                :minCount ="MIN_COUNT"
+                :maxCount ="MAX_INGREDIENT_COUNT"
                 @changeCount="changeCount($event, ingredient)"
               />
             </li>
@@ -55,44 +55,70 @@
 <script>
 import RadioButton from "@/common/components/RadioButton";
 import ItemCounter from "@/common/components/ItemCounter";
-import { sauceValueById, fillingClassById } from "@/common/helpers.js";
+import { sauceValueById, findByID } from "@/common/helpers.js";
 import AppDrag from "@/common/components/AppDrag";
 
-import { MAX_INGRIDIENT_COUNT } from "@/common/constants.js";
+import { mapGetters, mapState, mapMutations } from "vuex";
+import { ADD_INGREDIENT, CHANGE_SOUCE } from "@/store/mutations-types";
+
+import { MAX_INGREDIENT_COUNT,
+         CLASS_INGREDIENT_COUNTER,
+         MIN_COUNT } from "@/common/constants.js";
 
 export default {
-  name: "BuilderIngridientsSelector",
+  name: "BuilderIngredientsSelector",
   components: { RadioButton, ItemCounter, AppDrag },
   data() {
     return {
       sauceValueById,
-      fillingClassById,
-      MAX_INGRIDIENT_COUNT,
+      MAX_INGREDIENT_COUNT,
+      MIN_COUNT,
+      CLASS_INGREDIENT_COUNTER,
     };
   },
-  props: {
-    sauces: {
-      type: Array,
-      required: true,
-    },
-    ingredients: {
-      type: Array,
-      required: true,
-    },
+ 
+  computed: {
+    ...mapState("Builder", {
+        ingredients: "ingredients",
+        pizza: "pizza",
+        sauces: "sauces",
+    }),
+    ...mapGetters("Builder", {
+        pizzaPrice: "pizzaPrice",
+    }),
   },
 
   methods: {
+    ...mapMutations("Builder", [ADD_INGREDIENT, CHANGE_SOUCE]),
+
+    changeCount(count, ingredient) {
+      this[ADD_INGREDIENT]({ count, ingredient });
+      this.pizzaPrice;
+    },
+
+    radioButtonAction(value, sauce) {
+      this[CHANGE_SOUCE]({ value, sauce });
+      this.pizzaPrice;
+    },
+
+    getIngredientCount(id) { 
+      const ingredient = findByID(this.pizza.checkedIngredients, id);
+      return ingredient?.count || 0;
+    },
+
     getNameById(map, id) {
       return map[id];
     },
-    changeCount(count, ingridient) {
-      return this.$emit("changeCount", { count, ingridient });
-    },
-    radioButtonAction(value, name) {
-      return this.$emit("radioButtonAction", { value, name });
-    },
+    
   },
 };
+
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .filling {
+     &::before {
+          background-image: var(--my-src);
+     }
+  }
+</style>
