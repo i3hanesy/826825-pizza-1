@@ -24,19 +24,24 @@
             "
           />
           <img
-            :src ="user.avatar"
+            :src ="getUserAttribute('avatar')"
             srcset="img/users/user5@2x.jpg"
-            :alt="user.name"
+            :alt="getUserAttribute('name')"
             width="32"
             height="32"
           />
         </picture>
-        <span>{{ user.name }}</span>
+        <span>{{ getUserAttribute('name') }}</span>
       </router-link>
-      <router-link to="/" class="header__logout">
+      <a 
+        href="#"
+        class="header__logout"
+        @click="$logout"
+      >
         <span>Выйти</span>
-      </router-link>
+      </a>
     </div>
+
     <div class="header__user" v-else>
       <router-link to="/login" class="header__login">
         <span>Войти</span>
@@ -46,10 +51,11 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState, mapGetters } from "vuex";
+import { logout } from '@/common/mixins';
 export default {
   name: "AppLayoutHeader",
+  mixins: [logout],
   props: {
     isLogin: {
       type: Boolean,
@@ -58,12 +64,18 @@ export default {
   },
 
   computed: {
-      ...mapState("Auth", {
-          user: "user",
-      }),
+      // ...mapState("Auth", {
+      //     user: "user",
+      // }),
+      ...mapState(['Auth']),
       ...mapState("Cart", {
           order: "order",
       }),
+      ...mapGetters('Auth', ['getUserAttribute']),
+
+      user() {
+        return this.Auth.user || {};
+      }
   },
 
 };

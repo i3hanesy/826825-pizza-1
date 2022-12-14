@@ -78,6 +78,7 @@
       ...mapGetters("Cart", {
         totalPrice: "totalPrice",
       }),
+      
     },
 
     methods: {
@@ -95,7 +96,6 @@
       this.$router.push({ name: 'Index' });
       this[UPDATE_PIZZA](currentPizza);
     },
-    
 
     displayIngredients(ingredients) {
       return ingredients

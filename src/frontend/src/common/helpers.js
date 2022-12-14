@@ -1,3 +1,36 @@
+import resources from '@/common/enums/resources';
+import { SET_ENTITY } from '@/store/mutations-types';
+import {
+  AuthApiService,
+  CrudApiService,
+  ReadOnlyApiService,
+} from '@/services/api.service';
+
+export const createResources = notifier => {
+  return {
+    // [resources.USERS]:
+    //   new ReadOnlyApiService(resources.USERS, notifier),
+    [resources.AUTH]: new AuthApiService(notifier),
+    [resources.ADDRESSES]:
+      new CrudApiService(resources.ADDRESSES, notifier),
+    [resources.ORDERS]:
+      new CrudApiService(resources.ORDERS, notifier),
+    
+    
+    [resources.INGREDIENTS]: new ReadOnlyApiService(resources.INGREDIENTS, notifier),
+    [resources.DOUGH]: new ReadOnlyApiService(resources.DOUGH, notifier),
+    [resources.SAUCES]: new ReadOnlyApiService(resources.SAUCES, notifier),
+    [resources.SIZES]: new ReadOnlyApiService(resources.SIZES, notifier),
+    [resources.MISC]: new ReadOnlyApiService(resources.MISC, notifier),
+    
+  };
+};
+
+export const setAuth = store => {
+  store.$api.auth.setAuthHeader();
+  store.dispatch('Auth/getMe');
+};
+
 export const fillingClassById = {
   1: "mushrooms",
   2: "cheddar",
@@ -58,3 +91,4 @@ export const findByName = (array, name) => {
 export const findIndexByID = (array, id) => {
   return array.findIndex((it) => it.id === id);
 };
+

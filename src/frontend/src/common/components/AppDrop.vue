@@ -6,14 +6,14 @@
 
 <script>
 import { DATA_TRANSFER_PAYLOAD } from "@/common/constants";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
   name: "AppDrop",
 
   computed: {
-    ...mapGetters("Builder", {
-        pizzaPrice: "pizzaPrice",
-      }),
+    // ...mapGetters("Builder", {
+    //     pizzaPrice: "pizzaPrice",
+    //   }),
   },
 
   methods: {
@@ -25,7 +25,7 @@ export default {
         );
         this.$emit("drop", transferData);
       }
-      this.pizzaPrice
+      // this.pizzaPrice;
     },
   },
 };

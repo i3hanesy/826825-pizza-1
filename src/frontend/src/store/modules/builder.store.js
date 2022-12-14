@@ -10,8 +10,9 @@ import {
 } from '@/store/mutations-types';
 
 import { cloneDeep } from 'lodash';
+// import { lodash\cloneDeep} ;
 import { normalizeiJson, findByID, findByName, findIndexByID } from "@/common/helpers.js";
-import jsonPizza from "@/static/pizza.json";
+// import jsonPizza from "@/static/pizza.json";
 
 const MODULE = "Builder";
 
@@ -116,8 +117,9 @@ export default {
   },
 
   actions: {
-    fetchDoughs({ commit }) {
-      const doughs = jsonPizza.dough;
+    async fetchDoughs({ commit }) {
+      // const doughs = jsonPizza.dough;
+      const doughs = await this.$api.dough.query();
       commit(
         SET_ENTITY,
         {
@@ -127,8 +129,8 @@ export default {
         }, { root: true }
       );
     },
-    fetchSizes({ commit }) {
-      const sizes = jsonPizza.sizes;
+    async fetchSizes({ commit }) {
+      const sizes = await this.$api.sizes.query();
       commit(
         SET_ENTITY,
         {
@@ -138,8 +140,8 @@ export default {
         }, { root: true }
       );
     },
-    fetchSauces({ commit }) {
-      const sauces = jsonPizza.sauces;
+    async fetchSauces({ commit }) {
+      const sauces = await this.$api.sauces.query();
       commit(
         SET_ENTITY,
         {
@@ -149,14 +151,15 @@ export default {
         }, { root: true }
       );
     },
-    fetchIngredients({ commit }) {
-      const ingredients = jsonPizza.ingredients.map(ingredient => normalizeiJson(ingredient));
+    async fetchIngredients({ commit }) {
+      // const ingredients = jsonPizza.ingredients.map(ingredient => normalizeiJson(ingredient));
+      const ingredients = await this.$api.ingredients.query();
       commit(
         SET_ENTITY,
         {
           module: MODULE,
           entity: "ingredients",
-          value: ingredients,
+          value: ingredients.map(ingredient => normalizeiJson(ingredient)),
         }, { root: true }
       );
     },

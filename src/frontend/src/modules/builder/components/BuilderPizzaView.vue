@@ -42,7 +42,7 @@ import { fillingClassById } from "@/common/helpers.js";
 import AppDrop from "@/common/components/AppDrop.vue";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter.vue";
 
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapGetters } from "vuex";
 import { ADD_INGREDIENT, SET_PIZZA_NAME} from "@/store/mutations-types";
 import { findByID } from "@/common/helpers.js";
 
@@ -59,6 +59,10 @@ export default {
     ...mapState("Builder", {
         pizza: "pizza",
     }),
+
+    ...mapGetters("Builder", {
+        pizzaPrice: "pizzaPrice",
+      }),
   },
 
   methods: {
@@ -75,6 +79,7 @@ export default {
         ingredient: ingredient,
         count: count + 1,
       });
+      this.pizzaPrice;
     },
 
     getPizzaName(value) {

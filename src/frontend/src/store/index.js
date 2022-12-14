@@ -26,7 +26,7 @@ const state = () => ({
 
 const actions = {
   async init({ dispatch }) {
-    dispatch("Auth/fetchUsers");
+    dispatch("Auth/getMe");
     dispatch("Builder/fetchDoughs");
     dispatch("Builder/fetchSizes");
     dispatch("Builder/fetchSauces");

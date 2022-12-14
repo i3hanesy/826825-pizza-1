@@ -7,9 +7,18 @@
 </template>
 
 <script>
+import { setAuth } from '@/common/helpers';
 export default {
   name: "App",
   created() {
+    window.onerror = function (msg, url, line, col, error) {
+      console.error(error);
+    };
+    console.log(this)
+    if (this.$jwt.getToken()) {
+      setAuth(this.$store);
+    }
+
     this.$store.dispatch("init");
   },
 };

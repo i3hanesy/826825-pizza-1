@@ -10,7 +10,7 @@ import {
 } from '@/store/mutations-types';
 
 import { normalizeiJson, findByID, findIndexByID } from "@/common/helpers.js";
-import jsonMisc from "@/static/misc.json";
+// import jsonMisc from "@/static/misc.json";
 
 const MODULE = "Cart";
 
@@ -120,14 +120,15 @@ export default {
   },
 
   actions: {
-    fetchMiscs({ commit }) {
-      const miscs = jsonMisc.map(misc => normalizeiJson(misc));
+    async fetchMiscs({ commit }) {
+      const miscs = await this.$api.misc.query()
+      // const miscs = jsonMisc.map(misc => normalizeiJson(misc));
       commit(
         SET_ENTITY,
         {
           module: MODULE,
           entity: "miscs",
-          value: miscs,
+          value: miscs.map(misc => normalizeiJson(misc)),
         }, { root: true }
       );
     },
